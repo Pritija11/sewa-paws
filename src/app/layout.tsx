@@ -25,20 +25,20 @@ export const metadata: Metadata = {
   },
 
   description:
-    "Sewa Paws is an emerging animal-focused startup creating thoughtful solutions for animal care and welfare.",
+    "Sewa Paws is an emerging animal-focused organization creating thoughtful solutions for animal care and welfare.",
 
   keywords: [
     "Sewa Paws",
     "animal care",
     "animal welfare",
-    "animal care startup",
-    "animal welfare startup",
+    "animal care organization",
+    "animal welfare organization",
   ],
 
   openGraph: {
     title: "Sewa Paws | Animal Care & Welfare",
     description:
-      "An emerging animal-focused startup creating thoughtful solutions for animal care and welfare.",
+      "An emerging animal-focused organization creating thoughtful solutions for animal care and welfare.",
     url: "https://sewapaws.com",
     siteName: "Sewa Paws",
     type: "website",
