@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { navigationLinks } from "@/data/navigation";
 
 export default function Navbar() {
@@ -9,13 +10,15 @@ export default function Navbar() {
   const [activeSection, setActiveSection] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
 
+  const pathname = usePathname();
+
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
 
       const sections = navigationLinks
-        .filter((link) => link.href.startsWith("#"))
-        .map((link) => link.href.substring(1));
+        .filter((link) => link.href.includes("#"))
+        .map((link) => link.href.split("#")[1]);
 
       let currentSection = "";
 
@@ -67,13 +70,13 @@ export default function Navbar() {
         {/* Desktop Navigation */}
         <div className="hidden items-center gap-8 md:flex">
           {navigationLinks.map((link) => {
-            const sectionId = link.href.startsWith("#")
-              ? link.href.substring(1)
+            const sectionId = link.href.includes("#")
+              ? link.href.split("#")[1]
               : "";
 
             const isActive =
               link.href === "/stories"
-                ? false
+                ? pathname === "/stories"
                 : activeSection === sectionId;
 
             return (
@@ -108,7 +111,9 @@ export default function Navbar() {
         <button
           type="button"
           onClick={() => setMenuOpen((open) => !open)}
-          aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
+          aria-label={
+            menuOpen ? "Close navigation menu" : "Open navigation menu"
+          }
           aria-expanded={menuOpen}
           className="flex h-10 w-10 items-center justify-center text-[#3A2E25] md:hidden"
         >
@@ -123,12 +128,14 @@ export default function Navbar() {
         <div className="border-t border-[#3A2E25]/10 bg-[#FFF9E8] px-6 py-6 md:hidden">
           <div className="flex flex-col gap-5">
             {navigationLinks.map((link) => {
-              const sectionId = link.href.startsWith("#")
-                ? link.href.substring(1)
+              const sectionId = link.href.includes("#")
+                ? link.href.split("#")[1]
                 : "";
 
               const isActive =
-                link.href !== "/stories" && activeSection === sectionId;
+                link.href === "/stories"
+                  ? pathname === "/stories"
+                  : activeSection === sectionId;
 
               return (
                 <Link
@@ -142,13 +149,17 @@ export default function Navbar() {
                   }`}
                 >
                   {link.label}
+
+                  {isActive && (
+                    <span className="ml-2 inline-block h-0.5 w-8 rounded-full bg-[#E8895B] align-middle" />
+                  )}
                 </Link>
               );
             })}
 
             {/* Mobile Get Involved */}
             <Link
-              href="#get-involved"
+              href="/get-involved"
               onClick={handleMobileLinkClick}
               className="mt-2 w-fit rounded-full bg-[#F4D35E] px-5 py-3 text-sm font-semibold text-[#3A2E25]"
             >
